@@ -47,5 +47,7 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'shoulda-matchers'
+
+  gem 'factory_girl_rails'
 end
 
