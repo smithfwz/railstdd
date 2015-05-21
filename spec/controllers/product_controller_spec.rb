@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ProductsController, type: :controller do
+	let(:category) { Category.new(title: 'Book') }
+
 	describe '#index' do
-		let(:category) { Category.new(title: 'Book') }
 		let!(:products) do
 			products = []
 			products << Product.create!(title: 'Ruby', description: 'Ruby book', price: 12, category: category)
@@ -11,7 +12,16 @@ RSpec.describe ProductsController, type: :controller do
 
 		it 'gets a list of products' do
 			get :index
-			expect(assigns(:products)).to eq products
+			expect(assigns(:products).size).to eq products.size
 		end 
+	end
+
+	describe '#show' do
+		let!(:product){ Product.create!(title: 'Ruby', description: 'This is a ruby book', price: 12, category: category) }
+
+		it 'displays a product' do
+			get :show, id: product.id
+			expect(assigns(:product).id).to eq product.id
+		end
 	end
 end
