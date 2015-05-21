@@ -45,5 +45,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   gem 'awesome_print'
+
+  gem 'shoulda-matchers'
 end
 
