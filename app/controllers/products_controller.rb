@@ -4,12 +4,16 @@ class ProductsController < ApplicationController
 	end
 
 	def show
-		@product = Product.find(product)
+		@product = Product.find(product_id)
+	end
+
+	def new
+		@product = Product.new
 	end
 
 	private
 
-	def product
+	def product_id
 		params.require(:id)
 	end
 end

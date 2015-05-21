@@ -20,8 +20,15 @@ RSpec.describe ProductsController, type: :controller do
 		let!(:product){ Product.create!(title: 'Ruby', description: 'This is a ruby book', price: 12, category: category) }
 
 		it 'displays a product' do
-			get :show, id: product.id
+			get :show, id: product
 			expect(assigns(:product).id).to eq product.id
+		end
+	end
+
+	describe '#new' do
+		it 'assigns an empty product instance' do
+			get :new
+			expect(assigns(:product)).to be_a Product
 		end
 	end
 end
