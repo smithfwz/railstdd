@@ -12,31 +12,30 @@ class ProductsController < ApplicationController
 	end
 
 	def edit
-		@product = Product.find(params.require(:id))
+		@product = Product.find(product_id)
 		render :new
 	end
 
 	def update
-		product_params = params.require(:product).permit(:title, :description, :price, :published, :category_id)
-		@product = Product.find(params.require(:id))
+		@product = Product.find(product_id)
 		if @product.update(product_params)
-			redirect_to products_url
+			redirect_to products_url, notice: 'You have successfully updated a product.'
 		else
+			flash.now[:notice] = 'There is an error with your form.'
 			render :new
 		end
 	end
 
 	def destroy
-		
-		if Product.destroy(params.require(:id))
-			redirect_to products_url
+
+		if Product.destroy(product_id)
+			redirect_to products_url, notice: 'You have successfully deleted a product.'
 		else
-			redirect_to products_url
+			redirect_to products_url, notice: 'There is an error when delete your product.'
 		end
 	end
 
 	def create
-		product_params = params.require(:product).permit(:title, :description, :price, :published, :category_id)
 		@product = Product.new(product_params)
 		if @product.save
 			redirect_to products_url
@@ -49,5 +48,9 @@ class ProductsController < ApplicationController
 
 	def product_id
 		params.require(:id)
+	end
+
+	def product_params
+		params.require(:product).permit(:title, :description, :price, :published, :category_id)
 	end
 end

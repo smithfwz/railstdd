@@ -33,8 +33,8 @@ RSpec.describe ProductsController, type: :controller do
 		end
 
 		context 'Success' do 
-			let(:params) { attributes_for(:product, category_id: category.id)}
-			let!(:category){ create(:category) }
+			let(:params) { build(:product).attributes }
+	
 			it 'save a product' do
 				expect{ do_request }.to change(Product, :count).by(1)
 				expect(response).to redirect_to products_url
@@ -91,7 +91,7 @@ RSpec.describe ProductsController, type: :controller do
 			delete :destroy, id: product
 		end
 
-		it 'succes' do
+		it 'delete a product' do
 			expect{ do_request }.to change(Product, :count).by(-1) 
 		end
 	end
