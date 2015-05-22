@@ -26,4 +26,28 @@ RSpec.describe ProductsController, type: :controller do
 			expect(assigns(:product)).to be_a Product
 		end
 	end
+
+	describe '#create' do
+		def do_request
+			post :create, product: params
+		end
+
+		context 'Success' do 
+			let(:params) { attributes_for(:product, category_id: category.id)}
+			let!(:category){ create(:category) }
+			it 'save a product' do
+				expect{ do_request }.to change(Product, :count).by(1)
+				expect(response).to redirect_to products_url
+			end
+
+		end
+
+		context 'Fail' do 
+			let(:params) { attributes_for(:product, title: '') }
+			it 'render new on failure' do
+				post :create, product: attributes_for(:product, title: '')
+				expect(response).to render_template :new
+			end 
+		end
+	end
 end
