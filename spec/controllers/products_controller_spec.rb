@@ -83,4 +83,16 @@ RSpec.describe ProductsController, type: :controller do
 			end
 		end
 	end
+
+	describe '#destroy' do  
+		let!(:product) { create(:product) }
+
+		def do_request
+			delete :destroy, id: product
+		end
+
+		it 'succes' do
+			expect{ do_request }.to change(Product, :count).by(-1)
+		end
+	end
 end
