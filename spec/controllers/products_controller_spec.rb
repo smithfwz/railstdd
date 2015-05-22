@@ -92,7 +92,7 @@ RSpec.describe ProductsController, type: :controller do
 		end
 
 		it 'succes' do
-			expect{ do_request }.to change(Product, :count).by(-1)
+			expect{ do_request }.to change(Product, :count).by(-1) 
 		end
 	end
 end
