@@ -50,4 +50,37 @@ RSpec.describe ProductsController, type: :controller do
 			end 
 		end
 	end
+
+	describe '#edit' do 
+		let!(:product) { create(:product) }
+		it 'edit a product' do 
+			get :edit, id: product
+			expect(assigns(:product).id).to eq product.id
+		end
+	end
+
+	describe '#update' do 
+
+		def do_request
+			patch :update, id: product.id, product: params
+		end
+
+		let!(:product) { create(:product) }
+
+		context 'success' do 
+			let(:params) { attributes_for(:product, title: 'new title') }
+			it 'update a product' do 
+				do_request
+				expect(product.reload.title).to eq 'new title'
+			end
+		end
+
+		context 'Fail' do 
+			let(:params) { attributes_for(:product, title: '') }
+			it 'render new on failure' do 
+				do_request
+				expect(response).to render_template :new
+			end
+		end
+	end
 end

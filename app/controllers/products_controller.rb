@@ -16,6 +16,16 @@ class ProductsController < ApplicationController
 		render :new
 	end
 
+	def update
+		product_params = params.require(:product).permit(:title, :description, :price, :published, :category_id)
+		@product = Product.find(params.require(:id))
+		if @product.update(product_params)
+			redirect_to products_url
+		else
+			render :new
+		end
+	end
+
 	def create
 		product_params = params.require(:product).permit(:title, :description, :price, :published, :category_id)
 		@product = Product.new(product_params)
